@@ -60,7 +60,7 @@ export default function LoginPage() {
 
         <div className="demo-credentials-box">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <strong>Demo Account (Kalyani Nikunjam):</strong>
+            <strong>Demo Account (Kalyany Nikunjam):</strong>
             <button
               type="button"
               className="btn btn-secondary btn-sm"

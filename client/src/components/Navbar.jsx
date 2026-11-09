@@ -1,10 +1,10 @@
 // client/src/components/Navbar.jsx
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Activity, Calendar, BarChart2, Clock, LogOut, PlusCircle } from 'lucide-react';
+import { Activity, Calendar, BarChart2, Clock, LogOut } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
-export default function Navbar({ onOpenAddModal }) {
+export default function Navbar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -69,18 +69,6 @@ export default function Navbar({ onOpenAddModal }) {
         </nav>
 
         <div className="navbar-user">
-          {onOpenAddModal && (
-            <button
-              type="button"
-              className="btn btn-primary btn-sm"
-              onClick={onOpenAddModal}
-              title="Add Glucose Reading"
-            >
-              <PlusCircle size={16} />
-              <span>Add Reading</span>
-            </button>
-          )}
-
           <div className="user-badge" title={user?.email}>
             <div className="user-avatar">{getInitials(user?.name)}</div>
             <span>{user?.name || 'User'}</span>

@@ -24,7 +24,7 @@ async function seed() {
     const demoPassword = 'KKrds3j9#K';
     const passwordHash = await bcrypt.hash(demoPassword, 10);
 
-    // Upsert primary user: Kalyani Nikunjam (preserves exact email with Gmail dot)
+    // Upsert primary user: Kalyany Nikunjam (preserves exact email with Gmail dot)
     const userRes = await client.query(
       `INSERT INTO users (name, email, password_hash)
        VALUES ($1, $2, $3)
@@ -33,11 +33,11 @@ async function seed() {
              name = EXCLUDED.name,
              updated_at = CURRENT_TIMESTAMP
        RETURNING id, name, email`,
-      ['Kalyani Nikunjam', 'kalyany.nikunjam@gmail.com', passwordHash]
+      ['Kalyany Nikunjam', 'kalyany.nikunjam@gmail.com', passwordHash]
     );
     const kalyaniId = userRes.rows[0].id;
 
-    // Upsert secondary user: Kalyani Sanal (preserves exact email)
+    // Upsert secondary user: Kalyany Sanal (preserves exact email)
     const sanalRes = await client.query(
       `INSERT INTO users (name, email, password_hash)
        VALUES ($1, $2, $3)
@@ -46,13 +46,13 @@ async function seed() {
              name = EXCLUDED.name,
              updated_at = CURRENT_TIMESTAMP
        RETURNING id, name, email`,
-      ['Kalyani Sanal', 'kalyanysanal@gmail.com', passwordHash]
+      ['Kalyany Sanal', 'kalyanysanal@gmail.com', passwordHash]
     );
     const sanalId = sanalRes.rows[0].id;
 
     console.log(`Demo accounts synchronized successfully:`);
-    console.log(`- Kalyani Nikunjam (ID: ${kalyaniId}, Email: kalyany.nikunjam@gmail.com, Password: ${demoPassword})`);
-    console.log(`- Kalyani Sanal (ID: ${sanalId}, Email: kalyanysanal@gmail.com, Password: ${demoPassword})`);
+    console.log(`- Kalyany Nikunjam (ID: ${kalyaniId}, Email: kalyany.nikunjam@gmail.com, Password: ${demoPassword})`);
+    console.log(`- Kalyany Sanal (ID: ${sanalId}, Email: kalyanysanal@gmail.com, Password: ${demoPassword})`);
 
     // Clean existing readings for these demo accounts to ensure repeatable idempotency
     await client.query('DELETE FROM readings WHERE user_id = $1 OR user_id = $2', [kalyaniId, sanalId]);
@@ -113,7 +113,7 @@ async function seed() {
       );
     }
 
-    // Sample isolated reading for Kalyani Sanal
+    // Sample isolated reading for Kalyany Sanal
     await client.query(
       `INSERT INTO readings (user_id, reading_date, time_slot, glucose_value)
        VALUES ($1, $2, $3, $4)`,
@@ -121,7 +121,7 @@ async function seed() {
     );
 
     await client.query('COMMIT');
-    console.log(`Successfully seeded ${sampleReadings.length} readings for Kalyani Nikunjam and 1 reading for Kalyani Sanal.`);
+    console.log(`Successfully seeded ${sampleReadings.length} readings for Kalyany Nikunjam and 1 reading for Kalyany Sanal.`);
   } catch (err) {
     await client.query('ROLLBACK');
     console.error('Error during seeding:', err);

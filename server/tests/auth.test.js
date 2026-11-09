@@ -14,7 +14,7 @@ describe('Authentication API', () => {
       const res = await request(app)
         .post('/api/auth/register')
         .send({
-          name: 'Kalyani Nikunjam',
+          name: 'Kalyany Nikunjam',
           email: 'kalyany.nikunjam@gmail.com',
           password: 'KKrds3j9#K'
         });
@@ -24,7 +24,7 @@ describe('Authentication API', () => {
       expect(res.body.token).toBeDefined();
       expect(res.body.user).toBeDefined();
       expect(res.body.user.email).toBe('kalyany.nikunjam@gmail.com');
-      expect(res.body.user.name).toBe('Kalyani Nikunjam');
+      expect(res.body.user.name).toBe('Kalyany Nikunjam');
       expect(res.body.user.password_hash).toBeUndefined();
       expect(res.body.user.password).toBeUndefined();
 
@@ -40,7 +40,7 @@ describe('Authentication API', () => {
       const res = await request(app)
         .post('/api/auth/register')
         .send({
-          name: 'Kalyani Nikunjam',
+          name: 'Kalyany Nikunjam',
           email: 'kalyany.nikunjam@gmail.com',
           password: 12345678
         });
@@ -68,7 +68,7 @@ describe('Authentication API', () => {
       const res = await request(app)
         .post('/api/auth/register')
         .send({
-          name: 'Kalyani Sanal',
+          name: 'Kalyany Sanal',
           email: 'invalid-email',
           password: 'KKrds3j9#K'
         });
@@ -82,7 +82,7 @@ describe('Authentication API', () => {
       const res = await request(app)
         .post('/api/auth/register')
         .send({
-          name: 'Kalyani Sanal',
+          name: 'Kalyany Sanal',
           email: 'kalyanysanal@gmail.com',
           password: '123'
         });
@@ -97,7 +97,7 @@ describe('Authentication API', () => {
       await request(app)
         .post('/api/auth/register')
         .send({
-          name: 'Kalyani Nikunjam',
+          name: 'Kalyany Nikunjam',
           email: 'kalyany.nikunjam@gmail.com',
           password: 'KKrds3j9#K'
         });
@@ -106,7 +106,7 @@ describe('Authentication API', () => {
       const res = await request(app)
         .post('/api/auth/register')
         .send({
-          name: 'Kalyani Nikunjam Duplicate',
+          name: 'Kalyany Nikunjam Duplicate',
           email: 'kalyany.nikunjam@gmail.com',
           password: 'KKrds3j9#KSecond'
         });
@@ -122,7 +122,7 @@ describe('Authentication API', () => {
       await request(app)
         .post('/api/auth/register')
         .send({
-          name: 'Kalyani Nikunjam',
+          name: 'Kalyany Nikunjam',
           email: 'kalyany.nikunjam@gmail.com',
           password: 'KKrds3j9#K'
         });
@@ -205,7 +205,7 @@ describe('Authentication API', () => {
       const regRes = await request(app)
         .post('/api/auth/register')
         .send({
-          name: 'Kalyani Sanal',
+          name: 'Kalyany Sanal',
           email: 'kalyanysanal@gmail.com',
           password: 'KKrds3j9#K'
         });

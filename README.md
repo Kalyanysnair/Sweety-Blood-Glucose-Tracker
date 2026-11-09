@@ -164,10 +164,10 @@ The database seed script sets up two demo accounts:
 
 | Name | Email | Password | Notes |
 | :--- | :--- | :--- | :--- |
-| **Kalyani Nikunjam** | `kalyany.nikunjam@gmail.com` | `KKrds3j9#K` | Has 13 sample readings across current and previous months for testing reports. |
-| **Kalyani Sanal** | `kalyanysanal@gmail.com` | `KKrds3j9#K` | Has 1 sample reading to test that users cannot see each other's data. |
+| **Kalyany Nikunjam** | `kalyany.nikunjam@gmail.com` | `KKrds3j9#K` | Has 13 sample readings across current and previous months for testing reports. |
+| **Kalyany Sanal** | `kalyanysanal@gmail.com` | `KKrds3j9#K` | Has 1 sample reading to test that users cannot see each other's data. |
 
-*Note: The login page has a **"Fill Demo"** button to automatically fill Kalyani Nikunjam's login credentials.*
+*Note: The login page has a **"Fill Demo"** button to automatically fill Kalyany Nikunjam's login credentials.*
 
 ---
 

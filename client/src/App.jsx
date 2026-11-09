@@ -1,10 +1,9 @@
 // client/src/App.jsx
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
-import ReadingModal from './components/ReadingModal';
 
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
@@ -15,17 +14,10 @@ import MonthToDateReportPage from './pages/MonthToDateReportPage';
 import MonthlyReportPage from './pages/MonthlyReportPage';
 
 function AppLayout() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [refreshKey, setRefreshKey] = useState(0);
-
-  const handleSaved = () => {
-    setRefreshKey((prev) => prev + 1);
-  };
-
   return (
     <div className="app-layout">
-      <Navbar onOpenAddModal={() => setIsModalOpen(true)} />
-      <main className="main-content" key={refreshKey}>
+      <Navbar />
+      <main className="main-content">
         <Routes>
           <Route path="/" element={<DashboardPage />} />
           <Route path="/readings" element={<ReadingsPage />} />
@@ -35,13 +27,6 @@ function AppLayout() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
-
-      <ReadingModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        readingToEdit={null}
-        onSaved={handleSaved}
-      />
     </div>
   );
 }
