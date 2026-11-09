@@ -1,0 +1,13 @@
+{
+  "name": "sweety-workspace",
+  "private": true,
+  "scripts": {
+    "server": "npm --prefix server start",
+    "server:dev": "npm --prefix server run dev",
+    "server:test": "npm --prefix server test",
+    "client": "npm --prefix client run dev",
+    "client:build": "npm --prefix client run build",
+    "seed": "node database/seed.js",
+    "test": "npm --prefix server test"
+  }
+}
