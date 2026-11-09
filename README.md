@@ -1,8 +1,8 @@
 # Sweety – Blood Glucose Tracker
 
-A full-stack personal blood glucose tracking web application built with **React.js (Vite)**, **Node.js (Express)**, and **PostgreSQL**, developed as a technical assignment.
+A full-stack blood glucose tracking web application built with **React.js (Vite)**, **Node.js (Express)**, and **PostgreSQL** as part of a technical assignment.
 
-Sweety empowers individuals to monitor their blood glucose levels across four designated daily time slots, visualize daily fluctuations and historical trends, and gain actionable health insights through detailed daily, month-to-date, and previous-month reports.
+Sweety allows users to log blood glucose readings across four daily time slots, view trends on a dashboard, and generate daily, month-to-date, and previous-month reports.
 
 ---
 
@@ -12,69 +12,67 @@ Sweety empowers individuals to monitor their blood glucose levels across four de
 - **Framework**: React.js with [Vite](https://vitejs.dev/)
 - **Language**: JavaScript (ES Modules)
 - **Routing**: [React Router](https://reactrouter.com/) (v7)
-- **HTTP Client**: [Axios](https://axios-http.com/) with centralized interceptors
-- **Data Visualization**: [Recharts](https://recharts.org/) for responsive charts
+- **HTTP Client**: [Axios](https://axios-http.com/)
+- **Data Visualization**: [Recharts](https://recharts.org/)
 - **Icons**: [Lucide React](https://lucide.dev/)
-- **Styling**: Modern, responsive CSS with a calm healthcare palette (accessible contrast, card-based metrics, readable typography, responsive layouts)
+- **Styling**: Responsive CSS with healthcare theme styling
 
 ### Backend
 - **Runtime & Framework**: Node.js & [Express.js](https://expressjs.com/)
 - **Database**: PostgreSQL with the native [`pg`](https://node-postgres.com/) driver and connection pooling
-- **Security**: 
-  - `bcrypt` for one-way password hashing (10 salt rounds)
-  - `jsonwebtoken` (JWT) for stateless bearer authentication
-  - Parameterized SQL queries throughout to eliminate SQL injection
-  - CORS middleware configured for restricted client origins
-- **Validation**: `express-validator` with centralized request validation (strictly enforcing string types for credentials)
-- **Configuration**: `dotenv` for environment configuration
+- **Authentication & Security**:
+  - `bcrypt` for password hashing (10 salt rounds)
+  - `jsonwebtoken` (JWT) for authentication tokens (24h validity)
+  - Parameterized SQL queries to prevent SQL injection
+  - CORS middleware configured for the client origin
+- **Validation**: `express-validator` to validate request inputs (ensuring strings for passwords, names, and emails)
+- **Configuration**: `dotenv` for environment variables
 
 ### Testing
-- **Test Framework**: [Jest](https://jestjs.io/)
-- **Integration Testing**: [Supertest](https://github.com/ladjs/supertest)
-- **Database**: Dedicated, isolated test database (`sweety_test_db`)
+- **Test Runner**: [Jest](https://jestjs.io/)
+- **API Testing**: [Supertest](https://github.com/ladjs/supertest)
+- **Database**: Dedicated test database (`sweety_test_db`)
 
 ---
 
-## Project Architecture
-
-The project is structured into three clean, separated domains:
+## Project Structure
 
 ```text
 Sweety/
-├── client/                     # React Frontend (Vite)
+├── client/                     # React frontend (Vite)
 │   ├── src/
-│   │   ├── api/                # Axios instance & API client modules (auth, readings, reports)
-│   │   ├── components/         # Reusable UI components (Navbar, ReadingModal, StatCard, GlucoseBadge, EmptyState, ProtectedRoute)
-│   │   ├── context/            # AuthContext (authentication state, token management, session persistence)
-│   │   ├── pages/              # Page components (Login, Register, Dashboard, Readings, DailyReport, MonthToDateReport, MonthlyReport)
-│   │   ├── styles/             # Healthcare design system & responsive CSS
-│   │   ├── App.jsx             # Router layout & route definitions
-│   │   └── main.jsx            # Entry point
+│   │   ├── api/                # API client calls (auth, readings, reports)
+│   │   ├── components/         # Reusable UI components (Navbar, ReadingModal, StatCard, etc.)
+│   │   ├── context/            # AuthContext (login state and token storage)
+│   │   ├── pages/              # Page views (Login, Register, Dashboard, Readings, Reports)
+│   │   ├── styles/             # CSS stylesheets
+│   │   ├── App.jsx             # Router and route setup
+│   │   └── main.jsx            # Frontend entry point
 │   ├── index.html
 │   ├── package.json
-│   └── vite.config.js          # Vite config with optimized manual vendor chunking & proxy
+│   └── vite.config.js          # Vite configuration
 │
-├── server/                     # Express REST API
+├── server/                     # Express backend API
 │   ├── src/
-│   │   ├── config/             # Database connection pool (pg.Pool)
-│   │   ├── controllers/        # Business logic (authController, readingsController, reportsController)
-│   │   ├── middleware/         # Auth verification, validator handler, centralized error handler
-│   │   ├── routes/             # Express routes (authRoutes, readingsRoutes, reportsRoutes, index)
-│   │   ├── utils/              # Express-validator chains & calendar date calculation helpers
-│   │   ├── app.js              # Express application assembly (exported for testing)
-│   │   └── server.js           # Server bootstrap and port listener
-│   ├── tests/                  # Automated integration tests (auth, readings, reports, setup)
+│   │   ├── config/             # Database connection pool
+│   │   ├── controllers/        # Route controllers (auth, readings, reports)
+│   │   ├── middleware/         # Auth, validation, and error handling middleware
+│   │   ├── routes/             # API routes
+│   │   ├── utils/              # Validators and date calculation helpers
+│   │   ├── app.js              # Express app setup (exported for tests)
+│   │   └── server.js           # Server listener
+│   ├── tests/                  # Integration tests (auth, readings, reports)
 │   ├── package.json
 │   └── .env.example
 │
-├── database/                   # PostgreSQL DDL and Seeding
-│   ├── schema.sql              # Database schema, table definitions, constraints, and indexes
-│   └── seed.js                 # Database seeder with Mallu demo users and realistic historical readings
+├── database/                   # Database scripts
+│   ├── schema.sql              # Table definitions, constraints, and indexes
+│   └── seed.js                 # Seed script with demo users and sample readings
 │
-├── .env.example                # Root environment variable template
+├── .env.example                # Root environment template
 ├── .gitignore                  # Git ignore rules
-├── package.json                # Root workspace convenience scripts
-└── README.md                   # Comprehensive project documentation
+├── package.json                # Root convenience scripts
+└── README.md                   # Project documentation
 ```
 
 ---
@@ -82,153 +80,162 @@ Sweety/
 ## Features
 
 ### 1. Authentication & Security
-- **Strict String Authentication**: Validates that all passwords, names, and emails are strictly string types. Prevents type coercion attacks and rejects numbers or objects passed as credentials.
-- **Secure Password Hashing**: Passwords (such as `KKrds3j9#K`) are encrypted using `bcrypt` (10 rounds) before persisting. Plaintext passwords are never stored or logged.
-- **Login & JWT**: Stateless login returning a signed JWT token valid for 24 hours.
-- **Protected Routes**: Custom authentication middleware (`authenticateToken`) validates bearer tokens on private API endpoints.
-- **User Data Isolation**: Queries strictly enforce `user_id = req.user.id`. Users can only view, create, edit, or delete their own readings.
-- **Credential Protection**: Password hashes are stripped from all API responses.
+- **Registration and Login**: Users can register with name, email, and password, and log in to receive a JWT.
+- **Password Hashing**: Passwords are securely hashed using `bcrypt` (10 salt rounds) before storing. Plaintext passwords are never stored in the database.
+- **Input Validation**: Request bodies are validated using `express-validator`. Passwords, names, and emails must be non-empty strings.
+- **Protected Routes**: An authentication middleware (`authenticateToken`) verifies the JWT bearer token on private endpoints.
+- **User Data Isolation**: Database queries filter by `user_id = req.user.id` so users can only access their own readings.
+- **Email Handling**: Emails are normalized to lowercase while preserving dots in Gmail addresses.
 
-### 2. Glucose Reading Management
-- **Reading Attributes**:
+### 2. Reading Management
+- **Reading Fields**:
   - `reading_date` (Date, `YYYY-MM-DD`)
-  - `time_slot` (One of the four allowed slots)
-  - `glucose_value` (Whole integer in mg/dl)
+  - `time_slot` (one of the 4 allowed slots)
+  - `glucose_value` (whole number in mg/dl)
 - **Allowed Time Slots**:
   1. `Morning (fasting)`
   2. `After breakfast`
   3. `After lunch`
   4. `After dinner`
 - **Validation Rules**:
-  - `glucose_value` is required and must be a whole integer between **40 and 600** mg/dl (enforced at both application and PostgreSQL `CHECK` constraint levels).
-  - Only one reading allowed per time slot per user per date.
-  - Maximum four readings per day allowed.
-  - Reading date cannot be in the future relative to the current calendar date.
-- **Duplicate Prevention**: Enforced in PostgreSQL via `UNIQUE (user_id, reading_date, time_slot)` and caught by the centralized error handler returning a clear HTTP 409 message.
-- **CRUD Operations**: Complete support to add, view, filter, edit, and delete readings.
+  - Glucose value must be an integer between 40 and 600 mg/dl (checked in validator and via database `CHECK` constraint).
+  - Date cannot be in the future.
+  - Only one reading allowed per time slot per user per date (enforced by a PostgreSQL unique constraint on `user_id, reading_date, time_slot`).
+  - Maximum of 4 readings per day per user.
+- **CRUD Operations**: Add, view, filter by date range, edit, delete, and export readings to CSV.
 
-### 3. Reports & Analytics
+### 3. Reports
 - **Daily Report** (`/reports/daily`):
-  - Target date selection (defaults to today).
-  - Highest reading, lowest reading, reading count.
-  - Average glucose level rounded to **one decimal place**.
-  - Interactive bar chart showing reading values across each time slot.
-  - Table of individual readings with timestamps and clinical range classification badges.
-  - Friendly empty state when no readings exist for the date.
+  - Shows highest reading, lowest reading, total count, and average glucose value (rounded to 1 decimal place) for a selected date.
+  - Bar chart showing readings across the daily time slots.
+  - Table of readings with status badges.
+  - Shows an empty message if no readings exist for that date.
 - **Month-to-Date Report** (`/reports/month-to-date`):
-  - Calculates cumulative statistics from the first day of the selected month (`YYYY-MM-01`) through the selected date.
-  - Highest, lowest, average (rounded to 1 decimal place), and total count.
-  - Visual trend line chart displaying daily average levels with clinical reference thresholds.
-  - Day-by-day aggregated breakdown table.
+  - Calculates highest, lowest, average (rounded to 1 decimal place), and count from the 1st of the month through the selected date.
+  - Line chart showing daily average glucose trend.
+  - Daily breakdown table.
 - **Monthly Report** (`/reports/monthly`):
-  - Analyzes the **entire previous calendar month** relative to the selected date.
-  - Target month badge showing the exact date boundaries.
-  - Highest, lowest, average, and count for that entire calendar month.
-  - Day-by-day historical chart and table.
-  - Friendly empty state when no historical readings exist.
+  - Calculates statistics for the entire previous calendar month relative to the selected date.
+  - Shows highest, lowest, average (rounded to 1 decimal place), and total count for that month.
+  - Daily trend chart and summary table.
 
 ---
 
 ## Database Design
 
-The PostgreSQL database comprises two main tables created via `database/schema.sql`:
+The schema is defined in `database/schema.sql` with two tables:
 
 ### `users` Table
 | Column | Type | Constraints | Description |
 | :--- | :--- | :--- | :--- |
-| `id` | `SERIAL` | `PRIMARY KEY` | Unique user identifier |
-| `name` | `VARCHAR(100)` | `NOT NULL` | User full name |
-| `email` | `VARCHAR(255)` | `NOT NULL UNIQUE` | Unique email address (lowercased) |
-| `password_hash` | `VARCHAR(255)` | `NOT NULL` | bcrypt-hashed password |
+| `id` | `SERIAL` | `PRIMARY KEY` | User ID |
+| `name` | `VARCHAR(100)` | `NOT NULL` | Full name |
+| `email` | `VARCHAR(255)` | `NOT NULL UNIQUE` | Email address |
+| `password_hash` | `VARCHAR(255)` | `NOT NULL` | bcrypt hash |
 | `created_at` | `TIMESTAMPTZ` | `DEFAULT CURRENT_TIMESTAMP` | Account creation timestamp |
 | `updated_at` | `TIMESTAMPTZ` | `DEFAULT CURRENT_TIMESTAMP` | Last updated timestamp |
 
 ### `readings` Table
 | Column | Type | Constraints | Description |
 | :--- | :--- | :--- | :--- |
-| `id` | `SERIAL` | `PRIMARY KEY` | Unique reading identifier |
-| `user_id` | `INTEGER` | `NOT NULL REFERENCES users(id) ON DELETE CASCADE` | Foreign key referencing owner |
+| `id` | `SERIAL` | `PRIMARY KEY` | Reading ID |
+| `user_id` | `INTEGER` | `NOT NULL REFERENCES users(id) ON DELETE CASCADE` | Owner user ID |
 | `reading_date` | `DATE` | `NOT NULL` | Reading date (`YYYY-MM-DD`) |
-| `time_slot` | `VARCHAR(50)` | `NOT NULL CHECK (time_slot IN (...))` | One of four allowed slots |
+| `time_slot` | `VARCHAR(50)` | `NOT NULL CHECK (time_slot IN (...))` | Time slot name |
 | `glucose_value` | `INTEGER` | `NOT NULL CHECK (glucose_value >= 40 AND glucose_value <= 600)` | Value in mg/dl |
-| `created_at` | `TIMESTAMPTZ` | `DEFAULT CURRENT_TIMESTAMP` | Logged timestamp |
-| `updated_at` | `TIMESTAMPTZ` | `DEFAULT CURRENT_TIMESTAMP` | Last update timestamp |
+| `created_at` | `TIMESTAMPTZ` | `DEFAULT CURRENT_TIMESTAMP` | Created timestamp |
+| `updated_at` | `TIMESTAMPTZ` | `DEFAULT CURRENT_TIMESTAMP` | Updated timestamp |
 
-### Integrity Constraints & Indexes
-- **Unique Constraint**: `CONSTRAINT uq_user_reading_slot UNIQUE (user_id, reading_date, time_slot)` guarantees that a user cannot insert duplicate readings for the same time slot on the same date.
+### Constraints and Indexes
+- **Unique Constraint**: `CONSTRAINT uq_user_reading_slot UNIQUE (user_id, reading_date, time_slot)` prevents duplicate entries for the same slot on the same day.
 - **Check Constraints**:
-  - `chk_time_slot`: Ensures slot string is exactly one of the 4 allowed values.
-  - `chk_glucose_value`: Ensures value is an integer between 40 and 600 inclusive.
+  - `chk_time_slot`: Ensures slot matches one of the 4 allowed time slots.
+  - `chk_glucose_value`: Ensures value is an integer between 40 and 600.
 - **Indexes**:
-  - `idx_users_email` on `users(email)` for fast authentication lookups.
-  - `idx_readings_user_date` on `readings(user_id, reading_date DESC)` for fast dashboard and report aggregation queries.
-  - `idx_readings_user_date_slot` on `readings(user_id, reading_date, time_slot)` for instant duplicate checks.
+  - `idx_users_email` on `users(email)` for login queries.
+  - `idx_readings_user_date` on `readings(user_id, reading_date DESC)` for dashboard and reports.
+  - `idx_readings_user_date_slot` on `readings(user_id, reading_date, time_slot)` for duplicate lookups.
 
 ---
 
-## Demo Credentials (Mallu Profiles)
+## Demo Accounts
 
-For testing and demonstration, use the pre-seeded accounts:
+The database seed script sets up two demo accounts:
 
-| User Name | Email | Password | Pre-seeded Records | Role |
-| :--- | :--- | :--- | :--- | :--- |
-| **Kalyani Nikunjam** | `kalyany.nikunjam@gmail.com` | `KKrds3j9#K` | 13 readings across Today, Earlier this Month, and Previous Month | **Primary Demo User** |
-| **Kalyani Sanal** | `kalyanysanal@gmail.com` | `KKrds3j9#K` | 1 reading (used to test multi-tenant data privacy) | **Secondary User** |
+| Name | Email | Password | Notes |
+| :--- | :--- | :--- | :--- |
+| **Kalyani Nikunjam** | `kalyany.nikunjam@gmail.com` | `KKrds3j9#K` | Has 13 sample readings across current and previous months for testing reports. |
+| **Kalyani Sanal** | `kalyanysanal@gmail.com` | `KKrds3j9#K` | Has 1 sample reading to test that users cannot see each other's data. |
 
-*Tip: On the login page, you can click the **"Fill Demo"** button to automatically populate Kalyani Nikunjam's credentials (`kalyany.nikunjam@gmail.com` / `KKrds3j9#K`).*
+*Note: The login page has a **"Fill Demo"** button to automatically fill Kalyani Nikunjam's login credentials.*
 
 ---
 
 ## Getting Started
 
 ### Prerequisites
-- **Node.js**: v18.0.0 or higher (v20.x recommended)
+- **Node.js**: v18.0.0 or higher
 - **npm**: v9.x or higher
 - **PostgreSQL**: v14.x or higher
 
 ### Step 1: Database Setup
-Both databases (`sweety_db` and `sweety_test_db`) are pre-configured. To reapply the schema or re-seed:
+Make sure PostgreSQL is running, then create the development and test databases:
+```bash
+# Using createdb CLI
+createdb -U postgres sweety_db
+createdb -U postgres sweety_test_db
+```
+*(Or in `psql`: `CREATE DATABASE sweety_db; CREATE DATABASE sweety_test_db;`)*
+
+Apply the schema and seed the initial data:
 ```bash
 # Schema migration
 psql -U postgres -d sweety_db -f database/schema.sql
 psql -U postgres -d sweety_test_db -f database/schema.sql
 
-# Seed Mallu demo accounts
+# Seed demo users and readings
 node database/seed.js
 ```
 
 ### Step 2: Environment Configuration
-Ensure `server/.env` is configured:
+Copy `server/.env.example` to `server/.env`:
+```bash
+cp server/.env.example server/.env
+# On Windows PowerShell:
+Copy-Item server/.env.example server/.env
+```
+
+Update `server/.env` with your PostgreSQL password:
 ```ini
 PORT=5000
 NODE_ENV=development
 DATABASE_URL=postgresql://postgres:your_password@localhost:5432/sweety_db
 TEST_DATABASE_URL=postgresql://postgres:your_password@localhost:5432/sweety_test_db
-JWT_SECRET=sweety_blood_glucose_tracker_jwt_secret_key_2026!
+JWT_SECRET=replace_with_a_long_random_secret
 JWT_EXPIRES_IN=24h
 CLIENT_URL=http://localhost:5173
 ```
 
 ### Step 3: Run the Application
 
-#### Terminal 1: Backend Server
+#### Backend (Terminal 1)
 ```bash
 cd server
 npm run dev
 # or: npm start
 ```
-*API running on [http://localhost:5000](http://localhost:5000).*
+*API runs at http://localhost:5000.*
 
-#### Terminal 2: Frontend Client
+#### Frontend (Terminal 2)
 ```bash
 cd client
 npm run dev
 ```
-*Vite React client running on [http://localhost:5173](http://localhost:5173).*
+*Frontend runs at http://localhost:5173.*
 
 ### Step 4: Run Automated Tests
 ```bash
 cd server
 npm test
 ```
-*Runs all 32 tests across authentication, readings, and reports.*
+*Runs all 36 tests across authentication, readings, and reports.*
